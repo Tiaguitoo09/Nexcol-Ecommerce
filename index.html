@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- Tienda generada con Harvys, asistente de e-commerce creado por el Profesor Harvey Sanabria -->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexcol Link — [POR COMPLETAR]</title>
+<meta name="description" content="Productos importados de China en tecnología, ferretería y juguetería. Atención y entregas en Bogotá.">
+<meta name="generator" content="Harvys — asistente de e-commerce del Profesor Harvey Sanabria">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="anim-baja tarj-borde modo-oscuro">
+
+<!-- MODAL PAGO -->
+<div class="modal-overlay" id="modal-pago" onclick="modalClickFuera(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head"><h3>Confirmar pago</h3><button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-total"><span class="tl">Total a pagar</span><span class="tm" id="modal-total-monto">$0</span></div>
+      <div class="pago-metodos" id="pago-metodos"></div>
+      <div class="pago-datos" id="pago-datos">
+        <div class="pd-label">Transferir a este número</div>
+        <div class="pd-numero" id="pd-numero"></div>
+        <div class="pd-nombre" id="pd-nombre"></div>
+        <button class="btn-copiar" onclick="copiarNumero()">📋 Copiar número</button>
+      </div>
+      <div class="pasos">
+        <div class="paso"><div class="paso-num">1</div><div class="paso-txt" id="paso-1"></div></div>
+        <div class="paso"><div class="paso-num">2</div><div class="paso-txt">Toca <strong>"Confirmar y enviar"</strong> — se abre WhatsApp con tu pedido</div></div>
+        <div class="paso"><div class="paso-num">3</div><div class="paso-txt" id="paso-3"></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <a href="#" target="_blank" rel="noopener" class="btn-wsp" onclick="return prepararWsp(this)">✅ Confirmar y enviar por WhatsApp</a>
+      <button class="btn-seguir" onclick="cerrarModal()">← Seguir comprando</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+
+<!-- VISOR DE FOTOS -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto del producto">
+  <figure class="visor-caja">
+    <button class="visor-cerrar" aria-label="Cerrar">✕</button>
+    <div class="visor-foto" id="visor-foto"><img id="visor-img" alt=""></div>
+    <figcaption><strong id="visor-nombre"></strong><span id="visor-precio"></span></figcaption>
+    <div class="visor-ayuda">Toca o haz clic en la foto para ampliarla más</div>
+  </figure>
+</div>
+
+<button class="carrito-fab" onclick="toggleCarrito()" id="fab" aria-label="Abrir carrito">🛒<span class="carrito-badge" id="badge">0</span></button>
+
+<div class="carrito-panel" id="panel-carrito">
+  <div class="panel-header"><h3>Tu pedido Nexcol</h3><button class="btn-cerrar" onclick="cerrarCarrito()" aria-label="Cerrar carrito">✕</button></div>
+  <ul id="lista-carrito"></ul>
+  <div class="panel-footer">
+    <div class="total-row"><span class="total-lbl">Total</span><span class="total-monto" id="total">$0</span></div>
+    <div class="panel-btns"><button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar</button><button class="btn-pagar" onclick="pagar()">Enviar pedido por WhatsApp</button></div>
+  </div>
+</div>
+
+<!-- ASISTENTE DE LA TIENDA (responde con los datos de esta tienda) -->
+<span class="as-aviso" id="as-aviso">¿Te ayudo? 👋</span>
+<button class="as-burbuja" id="as-burbuja" aria-label="Abrir el asistente de la tienda"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></button>
+<div class="as-panel" id="as-panel" role="dialog" aria-label="Baracatinga">
+  <div class="as-cabecera">
+    <div class="as-avatar"><svg class="as-robot" viewBox="0 0 64 64" aria-hidden="true">
+      <line x1="32" y1="5" x2="32" y2="14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <circle class="as-antena" cx="32" cy="5" r="4" fill="currentColor"/>
+      <rect x="4" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="54" y="27" width="6" height="12" rx="3" fill="currentColor"/>
+      <rect x="10" y="14" width="44" height="38" rx="15" fill="currentColor"/>
+      <rect x="16" y="21" width="32" height="20" rx="10" fill="var(--as-cara)"/>
+      <circle class="as-ojo" cx="25" cy="31" r="4" fill="currentColor"/>
+      <circle class="as-ojo" cx="39" cy="31" r="4" fill="currentColor"/>
+      <path d="M26 45q6 4 12 0" stroke="var(--as-cara)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+    <div><strong>Baracatinga</strong><small><i></i> En línea</small></div>
+    <button id="as-cerrar" aria-label="Cerrar el asistente">✕</button>
+  </div>
+  <div class="as-mensajes" id="as-mensajes"></div>
+  <div class="as-chips" id="as-chips"></div>
+  <form class="as-form" id="as-form">
+    <input id="as-input" placeholder="Escribe tu pregunta…" autocomplete="off" aria-label="Tu pregunta">
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+  </form>
+</div>
+
+<header class="hero hero-compacto">
+  <div class="hero-bg efecto-ninguno"></div>
+  <div class="hero-content">
+    <div>
+      <img src="img/imagen-2026-10-27-152910223-dt8vfd.png" alt="Logo Nexcol Link" class="hero-logo">
+      <div class="hero-badge">Tecnología · Ferretería · Juguetería</div>
+      <h1>Nexcol<span>Link</span></h1>
+      <p class="hero-sub">Productos importados. Entregas el mismo día en Bogotá. Pide por WhatsApp.</p>
+      <a href="#catalogo" class="btn-hero">Ver catálogo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <div class="hero-stats"><div class="hero-stat"><div class="num">4</div><div class="lbl">Productos en catálogo</div></div><div class="hero-stat"><div class="num">Bogotá</div><div class="lbl">Nuestra cobertura</div></div><div class="hero-stat"><div class="num">Mismo día</div><div class="lbl">Entregas en Bogotá</div></div></div>
+    </div>
+    </div>
+  <div class="hero-scroll"><div></div></div>
+</header>
+
+<div class="filtros-wrap" id="filtros-bar">
+  <div class="busqueda-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/></svg>
+    <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarBusqueda()">
+  </div>
+</div>
+<section class="catalogo-wrap" id="catalogo">
+  <div class="catalogo-header">
+    <div><div class="sec-label">Encuentra lo que buscas</div><div class="sec-title">Catálogo</div></div>
+    <div class="catalogo-count" id="cont-count"></div>
+  </div>
+  <div id="productos"></div>
+</section>
+
+<section class="beneficios-sec" id="beneficios">
+  <div class="sec-centro"><div class="sec-label">Así compras con nosotros</div><div class="sec-title">Compra fácil</div></div>
+  <div class="beneficios-grid">
+    <div class="bcard"><div class="bcard-icono">💬</div><h3>Atención por WhatsApp</h3><p>Consulta y coordina tu pedido directamente con el negocio.</p></div><div class="bcard"><div class="bcard-icono">🚚</div><h3>Entrega el mismo día</h3><p>Solo Bogotá. Confirma condiciones y costo por WhatsApp.</p></div><div class="bcard"><div class="bcard-icono">💵</div><h3>Contraentrega</h3><p>Desde $10.000. Efectivo o transferencia por QR. Costo adicional según zona: hasta $15.000.</p></div><div class="bcard"><div class="bcard-icono">🛠️</div><h3>Variedad en un lugar</h3><p>Tecnología, ferretería y juguetería.</p></div>
+  </div>
+</section>
+
+<section class="recs-sec">
+  <div class="sec-label">Sigue explorando</div>
+  <div class="sec-title">Más para ti</div>
+  <div class="recs-grid" id="recomendados"></div>
+</section>
+
+<section class="top-sec">
+  <div class="sec-label">Favoritos de la comunidad</div>
+  <div class="sec-title">Los más votados</div>
+  <div class="top-grid" id="top"></div>
+</section>
+
+<section class="duelo-sec">
+  <div class="sec-label">Elige tu favorito</div>
+  <div class="sec-title">¿Cuál prefieres?</div>
+  <div class="duelo-arena" id="duelo"></div>
+  <p class="duelo-info">Vota por tu favorito.</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-marca"><h3>Nexcol Link</h3><p>Productos importados · Entregas en Bogotá · Pedidos por WhatsApp.</p></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="https://wa.me/573124442106" target="_blank" rel="noopener">WhatsApp: +57 3124442106</a></li><li><a href="https://instagram.com/nexcollink" target="_blank" rel="noopener">Instagram: @nexcollink</a></li><li>📍 Bogotá</li></ul></div>
+    <div class="footer-col"><h4>Pagos</h4><ul><li>Efectivo</li><li>Transferencia bancaria por QR</li></ul></div>
+    <div class="footer-col"><h4>Categorías</h4><ul><li>Tecnología</li><li>Ferretería</li><li>Juguetería</li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nexcol Link — Todos los derechos reservados</span>
+    <span>Nexcol Link · Bogotá</span>
+  </div>
+  <div class="footer-credito">
+    Creada con <strong>Harvys</strong> · Prof. Harvey Sanabria ·
+    <a href="https://wa.me/573103323843?text=Hola%20Profesor%20Harvey%2C%20vi%20una%20tienda%20creada%20con%20Harvys%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp 310 332 3843</a>
+  </div>
+</footer>
+
+<!-- Copia del proyecto para volver a abrirlo en Harvys (botón "Abrir"). No la borres. -->
+<script type="application/json" id="harvys-proyecto">{"negocio":{"nombre":"Nexcol Link","descripcion":"Productos importados de China en tecnología, ferretería y juguetería. Atención y entregas en Bogotá.","eslogan":"[POR COMPLETAR]","ciudad":"Bogotá","cobertura":"Entregas el mismo día en Bogotá, en todos los barrios. Recogida personal disponible; dirección y condiciones por confirmar con el negocio. Sin envíos nacionales por el momento.","whatsapp":"573124442106","instagram":"nexcollink","facebook":"","tiktok":"","horarios":[],"logo":"foto:dt8vfd"},"tema":{"nombreEstilo":"Nexcol Premium","modo":"oscuro","colores":{"primario":"#E8541A","textoSobrePrimario":"#0A1628","fondo":"#0A1628","fondoAlterno":"#14263F","tarjeta":"#14263F","texto":"#FFFFFF","textoSuave":"#C5CDDA","acento":"#E8541A"},"fuentes":{"titulos":"Space Grotesk","cuerpo":"Inter"},"titulosMayusculas":false,"radio":12,"animaciones":"baja","fondoEfecto":"ninguno","hero":"compacto","tarjetas":"borde"},"textos":{"heroEtiqueta":"Tecnología · Ferretería · Juguetería","heroTitulo":"Nexcol","heroTituloResaltado":"Link","heroSubtitulo":"Productos importados. Entregas el mismo día en Bogotá. Pide por WhatsApp.","heroBoton":"Ver catálogo","heroImagen":"","estadisticas":[{"valor":"{productos}","etiqueta":"Productos en catálogo"},{"valor":"Bogotá","etiqueta":"Nuestra cobertura"},{"valor":"Mismo día","etiqueta":"Entregas en Bogotá"}],"bannerEtiqueta":"Compra con atención personalizada","bannerTitulo":"Tecnología, herramientas","bannerTituloResaltado":"y diversión","bannerTexto":"Explora productos importados de China en tres categorías. Ofrecemos entrega el mismo día en Bogotá y recogida personal. Consulta por WhatsApp la disponibilidad de entrega, el punto de recogida y las promociones vigentes.","chips":["Entregas en Bogotá","Recogida personal","Contraentrega desde $10.000","Efectivo o transferencia por QR"],"catalogoEtiqueta":"Encuentra lo que buscas","catalogoTitulo":"Catálogo","botonAgregar":"+ Agregar al carrito","beneficiosEtiqueta":"Así compras con nosotros","beneficiosTitulo":"Compra fácil","recomendadosEtiqueta":"Sigue explorando","recomendadosTitulo":"Más para ti","topEtiqueta":"Favoritos de la comunidad","topTitulo":"Los más votados","dueloEtiqueta":"Elige tu favorito","dueloTitulo":"¿Cuál prefieres?","dueloInfo":"Vota por tu favorito.","testimoniosEtiqueta":"Experiencias de compra","testimoniosTitulo":"Opiniones de nuestros clientes","horariosEtiqueta":"Atención en Bogotá","horariosTitulo":"Horarios de Nexcol Link","footerTexto":"Productos importados · Entregas en Bogotá · Pedidos por WhatsApp.","footerFrase":"Nexcol Link · Bogotá","carritoTitulo":"Tu pedido Nexcol","botonPagar":"Enviar pedido por WhatsApp"},"productos":[{"id":"nexcol-01","nombre":"Intercomunicador Y12 para casco de moto","precio":120000,"categoria":"Tecnología","imagen":"foto:ijueza","descripcion":"Intercomunicador para casco de moto con Bluetooth 5.3 y radio FM.","opciones":null,"destacado":false},{"id":"nexcol-02","nombre":"Taladro percutor atornillador inalámbrico compacto","precio":180000,"categoria":"Ferretería","imagen":"foto:uoi4ai","descripcion":"Taladro OEM con motor sin escobillas y portabrocas sin llave de 10 mm.","opciones":null,"destacado":false},{"id":"nexcol-03","nombre":"Kit combinado de taladro inalámbrico OEM","precio":120000,"categoria":"Ferretería","imagen":"foto:s9hj11","descripcion":"Kit de herramientas domésticas multifuncionales con estuche rígido, llaves ajustables y batería de litio. Garantía de 1 año según la entrevista. La especificación «batería de 30 mm» está [POR COMPLETAR]: confirmar la unidad y la característica con el negocio.","opciones":null,"destacado":false},{"id":"nexcol-04","nombre":"Avioncitos RGB con energía eólica","precio":10000,"categoria":"Juguetería","imagen":"foto:sgnks3","descripcion":"Avioncitos RGB que funcionan con energía eólica, según la información del negocio.","opciones":null,"destacado":false}],"beneficios":[{"icono":"💬","titulo":"Atención por WhatsApp","texto":"Consulta y coordina tu pedido directamente con el negocio."},{"icono":"🚚","titulo":"Entrega el mismo día","texto":"Solo Bogotá. Confirma condiciones y costo por WhatsApp."},{"icono":"💵","titulo":"Contraentrega","texto":"Desde $10.000. Efectivo o transferencia por QR. Costo adicional según zona: hasta $15.000."},{"icono":"🛠️","titulo":"Variedad en un lugar","texto":"Tecnología, ferretería y juguetería."}],"testimonios":[],"pagos":{"metodos":[{"nombre":"Efectivo","icono":"💵","tipo":"contraentrega"},{"nombre":"Transferencia bancaria por QR","icono":"📲","tipo":"transferencia"}],"numeroTransferencia":"3124442106","titular":"[POR COMPLETAR]","contraentregaDetalle":"Disponible en todos los barrios de Bogotá. Pedido mínimo: $10.000 COP. Pago al dueño del negocio en efectivo o por transferencia bancaria mediante QR. Costo adicional según localidad o barrio: hasta $15.000 COP; confirmar el valor por WhatsApp antes de cerrar el pedido."},"backend":{"url":"https://script.google.com/macros/s/AKfycbziW18Z9Lept-snpHECogFW4x3sWITKDn9mEWyHbsIT3wIXaNZ6JQIZAAOqtsqH2FL3OA/exec"},"asistente":{"activo":true,"nombre":"Baracatinga","saludo":"¡Hola! Soy Baracatinga, el asistente de Nexcol Link. Te ayudo con productos, pedidos y entregas en Bogotá. ¿Qué buscas?"},"secciones":["catalogo","beneficios","recomendados","top","duelo"],"personalizado":{"css":":root {\n  --nexcol-navy-900: #0A1628;\n  --nexcol-navy-700: #14263F;\n  --nexcol-navy-500: #2B4163;\n  --nexcol-naranja-600: #E8541A;\n  --nexcol-naranja-700: #C94412;\n  --nexcol-naranja-100: #FDE9DF;\n  --nexcol-gris-100: #F3F5F8;\n  --nexcol-gris-400: #9AA5B5;\n}\n::selection { background: var(--nexcol-naranja-100); color: var(--nexcol-navy-900); }\n:focus-visible { outline: 3px solid var(--p); outline-offset: 3px; }\n@media (hover: hover) {\n  a:hover { text-decoration-color: var(--p); }\n}\n/* Identidad alineada al inicio, no centrada en el encabezado. */\nheader :is(.logo, .brand-logo, .navbar-brand),\nnav :is(.logo, .brand-logo, .navbar-brand) {\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  gap: 12px;\n  flex-shrink: 0;\n  margin-inline-start: 0;\n  margin-inline-end: auto;\n  text-align: left;\n}\nheader img, nav img, img[alt=\"Nexcol Link\"] {\n  object-fit: contain;\n  object-position: left center;\n  vertical-align: middle;\n}\nheader :is(.logo, .brand-logo, .navbar-brand) img,\nnav :is(.logo, .brand-logo, .navbar-brand) img,\nheader img[alt=\"Nexcol Link\"], nav img[alt=\"Nexcol Link\"] {\n  display: block;\n  width: auto;\n  height: 52px;\n  max-width: 180px;\n  margin-inline: 0;\n  flex-shrink: 0;\n}\nheader {\n  border-bottom: 1px solid var(--nexcol-navy-500);\n}\n.sec-title { line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 0.75rem; }\n.sec-label { margin-bottom: 0.4rem; letter-spacing: 0.1em; }\n@media (max-width: 600px) {\n  header :is(.logo, .brand-logo, .navbar-brand) img,\n  nav :is(.logo, .brand-logo, .navbar-brand) img,\n  header img[alt=\"Nexcol Link\"], nav img[alt=\"Nexcol Link\"] {\n    height: 40px;\n    max-width: 140px;\n  }\n}\n","secciones":[]}}</script>
+<script type="application/json" id="harvys-rutas">{"nexcol-01":"img/intercomunicador-y12-para-casco-de-moto-con-bluetooth-5-3-y-radio-fm-ijueza.jpg","nexcol-02":"img/taladro-percutor-atornillador-inalambrico-compacto-de-fabrica-oem-con-motor-sin-escobillas-y-portabrocas-sin-llave-de-10-mm-uoi4ai.jpg","nexcol-03":"img/kit-combinado-de-taladro-inalambrico-bateria-de-30-mm-oferta-especial-herramientas-domesticas-multifuncionales-estuche-rigido-garantia-s9hj11.jpg","nexcol-04":"img/avioncitos-rgb-que-funciona-con-energia-eolica-sgnks3.jpg"}</script>
+<script src="script.js"></script>
+</body>
+</html>
